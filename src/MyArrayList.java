@@ -2,7 +2,7 @@ import java.util.Iterator;
 
 class MyArrayList<T> implements MyList<T> {
     private static final int DEFAULT_CAPACITY = 10;
-    private Object[] array;
+    private T[] array;
     private int size;
 
     public MyArrayList() {
@@ -153,27 +153,29 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private int currentIndex = 0;
+        return new Itr();
+    }
 
-            @Override
-            public boolean hasNext() {
-                return currentIndex < size;
-            }
+    private class Itr implements Iterator<T>{
+        private int currentIndex = 0;
 
-            @Override
-            public T next() {
-                if (!hasNext()) {
-                    throw new IllegalStateException("No more elements");
-                }
-                return (T) array[currentIndex++];
+        @Override
+        public boolean hasNext() {
+            return currentIndex < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new IllegalStateException("No more elements");
             }
-        };
+            return (T) array[currentIndex++];
+        }
     }
 
     private void increaseCapacity() {
         int newCapacity = array.length * 2;
-        Object[] newArray = new Object[newCapacity];
+        T[] newArray = (T[]) new Object[newCapacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
     }
