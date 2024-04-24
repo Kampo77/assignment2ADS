@@ -42,10 +42,10 @@ public class Main {
 
         linkedList.remove(1);
 
-        linkedList.indexOf("World");
-        linkedList.lastIndexOf("Hello");
+        System.out.println(linkedList.indexOf("World"));
+        System.out.println(linkedList.lastIndexOf("Hello"));
 
-        linkedList.exists("Welcome");
+        System.out.println(linkedList.exists("Welcome"));
 
         Iterator<String> linkedListIterator = linkedList.iterator();
         while (linkedListIterator.hasNext()) {
