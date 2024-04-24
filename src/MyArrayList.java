@@ -6,7 +6,7 @@ class MyArrayList<T> implements MyList<T> {
     private int size;
 
     public MyArrayList() {
-        this.array = new Object[DEFAULT_CAPACITY];
+        this.array = (T[]) new Object[DEFAULT_CAPACITY];
         this.size = 0;
     }
 
@@ -20,16 +20,21 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void add(T item, int index) {
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if (size == 0) {
+            add(item);
+            return;
         }
-        if (size == array.length) {
+        checkBounds(index);
+        if (size >= array.length)
             increaseCapacity();
+
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
         }
-        System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = item;
         size++;
     }
+
 
     @Override
     public void addFirst(T item) {
@@ -43,17 +48,13 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void set(T item, int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
+        checkBounds(index);
         array[index] = item;
     }
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
+        checkBounds(index);
         return (T) array[index];
     }
 
@@ -75,11 +76,15 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void remove(int index) {
+        checkBounds(index);
+        System.arraycopy(array, index + 1, array, index, size - index - 1);
+        array[--size] = null;
+    }
+
+    private void checkBounds(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        System.arraycopy(array, index + 1, array, index, size - index - 1);
-        array[--size] = null;
     }
 
     @Override
@@ -127,7 +132,10 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public T[] toArray() {
-        return (T[]) array.clone();
+        T[] newArr = (T[]) new Object[size];
+        for (int i = 0; i < size; i++)
+            newArr[i] = (T) array[i];
+        return newArr;
     }
 
     @Override
