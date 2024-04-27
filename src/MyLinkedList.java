@@ -135,8 +135,28 @@ class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public void sort() {
-        // TODO: Implement sorting
+        boolean swapped;
+        Node node;
+
+        if (head == null)
+            return;
+
+        do {
+            swapped = false;
+            node = head;
+
+            while (node.next != null) {
+                if (((Comparable<T>) node.item).compareTo(node.next.item) > 0) {
+                    T t = node.next.item;
+                    node.next.item = node.item;
+                    node.item = t;
+                    swapped = true;
+                }
+                node = node.next;
+            }
+        } while (swapped);
     }
+
 
     @Override
     public int indexOf(T item) {

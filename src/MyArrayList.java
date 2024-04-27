@@ -102,7 +102,19 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void sort() {
-        // TODO: Implement sorting
+        boolean swapped;
+        for (int i = 0; i < size - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < size - i - 1; j++)
+                if (((Comparable<T>) array[j]).compareTo(array[j + 1]) > 0) {
+                    T t = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = t;
+                    swapped = true;
+                }
+            if (!swapped)
+                break;
+        }
     }
 
     @Override
@@ -148,6 +160,7 @@ class MyArrayList<T> implements MyList<T> {
 
     @Override
     public int size() {
+
         return size;
     }
 
