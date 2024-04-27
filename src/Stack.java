@@ -1,27 +1,27 @@
 public class Stack<T extends Comparable<T>> {
     private final MyList<T> list;
 
-    public Stack(MyList<T> list) {
-        this.list = list;
+    public Stack() {
+        this.list = new MyArrayList<>();
     }
 
     public boolean isEmpty() {
-        return size() == 0;
+        return list.size() == 0;
     }
 
-    public int size() {
+    public int getSize() {
         return list.size();
     }
 
-    public T top() {
+    public T getLast() {
         return list.getLast();
     }
 
-    public void push(T element) {
+    public void add(T element) {
         list.addLast(element);
     }
 
-    public T pop() {
+    public T receiveItem() {
         T topElement = list.getLast();
         list.removeLast();
         return topElement;

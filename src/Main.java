@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         testArrayList();
         testLinkedList();
+        Stack<Integer> stack = new Stack<>();
     }
 
     private static void testArrayList() {
